@@ -1,0 +1,30 @@
+${AnsiColor.BRIGHT_GREEN}
+
+
+                                                                                                   bbbbbbbb
+         tttt                                                 hhhhhhh                              b::::::b            lllllll
+      ttt:::t                                                 h:::::h                              b::::::b            l:::::l
+      t:::::t                                                 h:::::h                              b::::::b            l:::::l
+      t:::::t                                                 h:::::h                               b:::::b            l:::::l
+ttttttt:::::ttttttt        eeeeeeeeeeee        cccccccccccccccch::::h hhhhh                         b:::::bbbbbbbbb     l::::l    ooooooooooo      ggggggggg   ggggg
+t:::::::::::::::::t      ee::::::::::::ee    cc:::::::::::::::ch::::hh:::::hhh                      b::::::::::::::bb   l::::l  oo:::::::::::oo   g:::::::::ggg::::g
+t:::::::::::::::::t     e::::::eeeee:::::ee c:::::::::::::::::ch::::::::::::::hh                    b::::::::::::::::b  l::::l o:::::::::::::::o g:::::::::::::::::g
+tttttt:::::::tttttt    e::::::e     e:::::ec:::::::cccccc:::::ch:::::::hhh::::::h  ---------------  b:::::bbbbb:::::::b l::::l o:::::ooooo:::::og::::::ggggg::::::gg
+      t:::::t          e:::::::eeeee::::::ec::::::c     ccccccch::::::h   h::::::h -:::::::::::::-  b:::::b    b::::::b l::::l o::::o     o::::og:::::g     g:::::g
+      t:::::t          e:::::::::::::::::e c:::::c             h:::::h     h:::::h ---------------  b:::::b     b:::::b l::::l o::::o     o::::og:::::g     g:::::g
+      t:::::t          e::::::eeeeeeeeeee  c:::::c             h:::::h     h:::::h                  b:::::b     b:::::b l::::l o::::o     o::::og:::::g     g:::::g
+      t:::::t    tttttte:::::::e           c::::::c     ccccccch:::::h     h:::::h                  b:::::b     b:::::b l::::l o::::o     o::::og::::::g    g:::::g
+      t::::::tttt:::::te::::::::e          c:::::::cccccc:::::ch:::::h     h:::::h                  b:::::bbbbbb::::::bl::::::lo:::::ooooo:::::og:::::::ggggg:::::g
+      tt::::::::::::::t e::::::::eeeeeeee   c:::::::::::::::::ch:::::h     h:::::h                  b::::::::::::::::b l::::::lo:::::::::::::::o g::::::::::::::::g
+        tt:::::::::::tt  ee:::::::::::::e    cc:::::::::::::::ch:::::h     h:::::h                  b:::::::::::::::b  l::::::l oo:::::::::::oo   gg::::::::::::::g
+          ttttttttttt      eeeeeeeeeeeeee      cccccccccccccccchhhhhhh     hhhhhhh                  bbbbbbbbbbbbbbbb   llllllll   ooooooooooo       gggggggg::::::g
+                                                                                                                                                            g:::::g
+                                                                                                                                                gggggg      g:::::g
+                                                                                                                                                g:::::gg   gg:::::g
+                                                                                                                                                 g::::::ggg:::::::g
+                                                                                                                                                  gg:::::::::::::g
+                                                                                                                                                    ggg::::::ggg
+                                                                                                                                                       gggggg      
+${AnsiColor.BLACK}
+Application Version: ${application.version}${application.formatted-version}
+Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
