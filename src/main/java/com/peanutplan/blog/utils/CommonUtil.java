@@ -32,8 +32,8 @@ import java.util.regex.Pattern;
  * <p>
  * Created by 13 on 2017/2/21.
  */
-public class TaleUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaleUtils.class);
+public class CommonUtil {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonUtil.class);
 
     private static DataSource newDataSource;
     /**
@@ -53,7 +53,7 @@ public class TaleUtils {
     /**
      * 获取文件所在目录
      */
-    private static String location = TaleUtils.class.getClassLoader().getResource("").getPath();
+    private static String location = CommonUtil.class.getClassLoader().getResource("").getPath();
 
     /**
      * 判断是否是邮箱
@@ -121,7 +121,7 @@ public class TaleUtils {
         Properties properties = new Properties();
         try {
 //            默认是classPath路径
-            InputStream resourceAsStream = TaleUtils.class.getClassLoader().getResourceAsStream(fileName);
+            InputStream resourceAsStream = CommonUtil.class.getClassLoader().getResourceAsStream(fileName);
             if (resourceAsStream == null) {
                 throw new TipException("get resource from path fail");
             }
@@ -181,9 +181,9 @@ public class TaleUtils {
      * @return
      */
     public static DataSource getNewDataSource() {
-        if (newDataSource == null) synchronized (TaleUtils.class) {
+        if (newDataSource == null) synchronized (CommonUtil.class) {
             if (newDataSource == null) {
-                Properties properties = TaleUtils.getPropFromFile("application-jdbc.properties");
+                Properties properties = CommonUtil.getPropFromFile("application-jdbc.properties");
                 if (properties.size() == 0) {
                     return newDataSource;
                 }
@@ -421,7 +421,7 @@ public class TaleUtils {
     }
 
     public static String getFileKey(String name) {
-        String prefix = "/upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
+        String prefix = "/upload/" + DateUtil.dateFormat(new Date(), "yyyy/MM");
         if (!new File(AttachController.CLASSPATH + prefix).exists()) {
             new File(AttachController.CLASSPATH + prefix).mkdirs();
         }
@@ -484,7 +484,7 @@ public class TaleUtils {
      * @return
      */
     public static String getUplodFilePath() {
-        String path = TaleUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String path = CommonUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         path = path.substring(1, path.length());
         try {
             path = java.net.URLDecoder.decode(path, "utf-8");

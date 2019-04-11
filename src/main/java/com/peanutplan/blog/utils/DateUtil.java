@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Created by Administrator on 2017/3/10 010.
  */
-public class DateKit {
+public class DateUtil {
     public static final int INTERVAL_DAY = 1;
     public static final int INTERVAL_WEEK = 2;
     public static final int INTERVAL_MONTH = 3;
@@ -37,7 +37,7 @@ public class DateKit {
         }
     };
 
-    public DateKit() {
+    public DateUtil() {
     }
 
     public static boolean isToday(Date date) {
