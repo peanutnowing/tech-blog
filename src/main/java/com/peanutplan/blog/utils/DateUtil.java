@@ -669,4 +669,14 @@ public class DateUtil {
         return Long.valueOf(String.valueOf(tomorrow.getTimeInMillis()).substring(0, 10));
     }
 
+    /**
+     * 获取当前时间
+     *
+     * @return
+     */
+    public static int getCurrentTime() {
+        return (int) (new Date().getTime() / 1000);
+    }
+
+
 }

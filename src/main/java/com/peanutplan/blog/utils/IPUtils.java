@@ -10,12 +10,12 @@ import java.util.Enumeration;
  * ip工具类
  * Created by BlueT on 2017/3/9.
  */
-public class IPKit {
+public class IPUtils {
     /**
      * @param request 请求
      * @return IP Address
      */
-    public static String getIpAddrByRequest(HttpServletRequest request) {
+    public static String getIPAddressByRequest(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
@@ -33,7 +33,7 @@ public class IPKit {
      * @return 本机IPSocketException
      * @throws SocketException
      */
-    public static String getRealIp() throws SocketException {
+    public static String getRealIP() throws SocketException {
         String localip = null;// 本地IP，如果没有配置外网IP则返回它
         String netip = null;// 外网IP
 
