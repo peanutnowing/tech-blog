@@ -9,8 +9,7 @@ import com.peanutplan.blog.model.bo.RestResponseBo;
 import com.peanutplan.blog.model.vo.UserVo;
 import com.peanutplan.blog.service.ILogService;
 import com.peanutplan.blog.service.IUserService;
-import com.peanutplan.blog.utils.Commons;
-import com.peanutplan.blog.utils.TaleUtils;
+import com.peanutplan.blog.utils.CommonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +68,7 @@ public class AuthController extends BaseController {
             UserVo user = usersService.login(username, password);
             request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
             if (StringUtils.isNotBlank(remeber_me)) {
-                TaleUtils.setCookie(response, user.getUid());
+                CommonUtils.setCookie(response, user.getUid());
             }
             logService.insertLog(LogActions.LOGIN.getAction(), null, request.getRemoteAddr(), user.getUid());
         } catch (Exception e) {
@@ -102,7 +101,7 @@ public class AuthController extends BaseController {
         response.addCookie(cookie);
         try {
             //response.sendRedirect(Commons.site_url());
-            response.sendRedirect(Commons.site_login());
+            response.sendRedirect(CommonUtils.site_login());
         } catch (IOException e) {
             e.printStackTrace();
             LOGGER.error("注销失败", e);

@@ -8,7 +8,7 @@ import com.peanutplan.blog.model.vo.CommentVo;
 import com.peanutplan.blog.model.vo.CommentVoExample;
 import com.peanutplan.blog.model.vo.UserVo;
 import com.peanutplan.blog.service.ICommentService;
-import com.peanutplan.blog.utils.TaleUtils;
+import com.peanutplan.blog.utils.StringSimpleUtils;
 import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -122,7 +122,7 @@ public class CommentController extends BaseController {
             return RestResponseBo.fail("不存在该评论");
         }
         UserVo users = this.user(request);
-        content = TaleUtils.cleanXSS(content);
+        content = StringSimpleUtils.cleanXSS(content);
         content = EmojiParser.parseToAliases(content);
 
         CommentVo comments = new CommentVo();

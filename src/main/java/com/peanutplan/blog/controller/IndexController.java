@@ -12,15 +12,15 @@ import com.peanutplan.blog.model.bo.CommentBo;
 import com.peanutplan.blog.model.bo.RestResponseBo;
 import com.peanutplan.blog.model.vo.CommentVo;
 import com.peanutplan.blog.model.vo.ContentVo;
-import com.peanutplan.blog.model.vo.ContentVo;
 import com.peanutplan.blog.model.vo.MetaVo;
 import com.peanutplan.blog.service.ICommentService;
 import com.peanutplan.blog.service.IContentService;
 import com.peanutplan.blog.service.IMetaService;
 import com.peanutplan.blog.service.ISiteService;
-import com.peanutplan.blog.utils.IPKit;
-import com.peanutplan.blog.utils.PatternKit;
-import com.peanutplan.blog.utils.TaleUtils;
+import com.peanutplan.blog.utils.CommonUtils;
+import com.peanutplan.blog.utils.IPUtils;
+import com.peanutplan.blog.utils.PatternUtils;
+import com.peanutplan.blog.utils.StringSimpleUtils;
 import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -152,7 +152,7 @@ public class IndexController extends BaseController {
      */
     @RequestMapping("logout")
     public void logout(HttpSession session, HttpServletResponse response) {
-        TaleUtils.logout(session, response);
+        CommonUtils.logout(session, response);
     }
 
     /**
@@ -184,11 +184,11 @@ public class IndexController extends BaseController {
             return RestResponseBo.fail("姓名过长");
         }
 
-        if (StringUtils.isNotBlank(mail) && !TaleUtils.isEmail(mail)) {
+        if (StringUtils.isNotBlank(mail) && !StringSimpleUtils.isEmail(mail)) {
             return RestResponseBo.fail("请输入正确的邮箱格式");
         }
 
-        if (StringUtils.isNotBlank(url) && !PatternKit.isURL(url)) {
+        if (StringUtils.isNotBlank(url) && !PatternUtils.isURL(url)) {
             return RestResponseBo.fail("请输入正确的URL格式");
         }
 
@@ -196,14 +196,14 @@ public class IndexController extends BaseController {
             return RestResponseBo.fail("请输入200个字符以内的评论");
         }
 
-        String val = IPKit.getIpAddrByRequest(request) + ":" + cid;
+        String val = IPUtils.getIPAddressByRequest(request) + ":" + cid;
         Integer count = cache.hget(Types.COMMENTS_FREQUENCY.getType(), val);
         if (null != count && count > 0) {
             return RestResponseBo.fail("您发表评论太快了，请过会再试");
         }
 
-        author = TaleUtils.cleanXSS(author);
-        text = TaleUtils.cleanXSS(text);
+        author = StringSimpleUtils.cleanXSS(author);
+        text = StringSimpleUtils.cleanXSS(text);
 
         author = EmojiParser.parseToAliases(author);
         text = EmojiParser.parseToAliases(text);

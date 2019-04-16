@@ -30,7 +30,7 @@ public class BaseInterceptor implements HandlerInterceptor {
     private MapCache cache = MapCache.single();
 
     @Resource
-    private Commons commons;
+    private CommonUtils commons;
 
     @Resource
     private AdminCommons adminCommons;
@@ -41,13 +41,13 @@ public class BaseInterceptor implements HandlerInterceptor {
         String uri = request.getRequestURI();
 
         LOGGE.info("UserAgent: {}", request.getHeader(USER_AGENT));
-        LOGGE.info("用户访问地址: {}, 来路地址: {}", uri, IPKit.getIpAddrByRequest(request));
+        LOGGE.info("用户访问地址: {}, 来路地址: {}", uri, IPUtils.getIPAddressByRequest(request));
 
 
         //请求拦截处理
-        UserVo user = TaleUtils.getLoginUser(request);
+        UserVo user = CommonUtils.getLoginUser(request);
         if (null == user) {
-            Integer uid = TaleUtils.getCookieUid(request);
+            Integer uid = CommonUtils.getCookieUid(request);
             if (null != uid) {
                 //这里还是有安全隐患,cookie是可以伪造的
                 user = userService.queryUserById(uid);

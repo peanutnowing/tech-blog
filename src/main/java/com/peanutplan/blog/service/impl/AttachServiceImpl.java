@@ -6,7 +6,7 @@ import com.peanutplan.blog.dao.AttachVoMapper;
 import com.peanutplan.blog.model.vo.AttachVo;
 import com.peanutplan.blog.model.vo.AttachVoExample;
 import com.peanutplan.blog.service.IAttachService;
-import com.peanutplan.blog.utils.DateKit;
+import com.peanutplan.blog.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class AttachServiceImpl implements IAttachService {
         attach.setAuthorId(author);
         attach.setFkey(fkey);
         attach.setFtype(ftype);
-        attach.setCreated(DateKit.getCurrentUnixTime());
+        attach.setCreated(DateUtil.getCurrentUnixTime());
         attachDao.insertSelective(attach);
     }
 

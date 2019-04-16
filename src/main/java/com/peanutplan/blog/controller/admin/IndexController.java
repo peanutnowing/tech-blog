@@ -14,7 +14,7 @@ import com.peanutplan.blog.service.ILogService;
 import com.peanutplan.blog.service.ISiteService;
 import com.peanutplan.blog.service.IUserService;
 import com.peanutplan.blog.utils.GsonUtils;
-import com.peanutplan.blog.utils.TaleUtils;
+import com.peanutplan.blog.utils.StringSimpleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,7 +124,7 @@ public class IndexController extends BaseController {
             return RestResponseBo.fail("请确认信息输入完整");
         }
 
-        if (!users.getPassword().equals(TaleUtils.MD5encode(users.getUsername() + oldPassword))) {
+        if (!users.getPassword().equals(StringSimpleUtils.MD5encode(users.getUsername() + oldPassword))) {
             return RestResponseBo.fail("旧密码错误");
         }
         if (password.length() < 6 || password.length() > 14) {
@@ -134,7 +134,7 @@ public class IndexController extends BaseController {
         try {
             UserVo temp = new UserVo();
             temp.setUid(users.getUid());
-            String pwd = TaleUtils.MD5encode(users.getUsername() + password);
+            String pwd = StringSimpleUtils.MD5encode(users.getUsername() + password);
             temp.setPassword(pwd);
             userService.updateByUid(temp);
             logService.insertLog(LogActions.UP_PWD.getAction(), null, request.getRemoteAddr(), this.getUid(request));

@@ -2,8 +2,8 @@ package com.peanutplan.blog.controller;
 
 
 import com.peanutplan.blog.model.vo.UserVo;
+import com.peanutplan.blog.utils.CommonUtils;
 import com.peanutplan.blog.utils.MapCache;
-import com.peanutplan.blog.utils.TaleUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,7 +41,7 @@ public abstract class BaseController {
      * @return
      */
     public UserVo user(HttpServletRequest request) {
-        return TaleUtils.getLoginUser(request);
+        return CommonUtils.getLoginUser(request);
     }
 
     public Integer getUid(HttpServletRequest request){

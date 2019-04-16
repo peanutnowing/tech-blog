@@ -13,9 +13,9 @@ import com.peanutplan.blog.model.vo.ContentVoExample;
 import com.peanutplan.blog.service.IContentService;
 import com.peanutplan.blog.service.IMetaService;
 import com.peanutplan.blog.service.IRelationshipService;
-import com.peanutplan.blog.utils.DateKit;
-import com.peanutplan.blog.utils.TaleUtils;
-import com.peanutplan.blog.utils.Tools;
+import com.peanutplan.blog.utils.CommonUtils;
+import com.peanutplan.blog.utils.DateUtil;
+import com.peanutplan.blog.utils.StringSimpleUtils;
 import com.vdurmont.emoji.EmojiParser;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -70,7 +70,7 @@ public class ContentServiceImpl implements IContentService {
             if (contents.getSlug().length() < 5) {
                 throw new TipException("路径太短了");
             }
-            if (!TaleUtils.isPath(contents.getSlug())) throw new TipException("您输入的路径不合法");
+            if (!CommonUtils.isPath(contents.getSlug())) throw new TipException("您输入的路径不合法");
             ContentVoExample contentVoExample = new ContentVoExample();
             contentVoExample.createCriteria().andTypeEqualTo(contents.getType()).andStatusEqualTo(contents.getSlug());
             long count = contentDao.countByExample(contentVoExample);
@@ -81,7 +81,7 @@ public class ContentServiceImpl implements IContentService {
 
         contents.setContent(EmojiParser.parseToAliases(contents.getContent()));
 
-        int time = DateKit.getCurrentUnixTime();
+        int time = DateUtil.getCurrentUnixTime();
         contents.setCreated(time);
         contents.setModified(time);
         contents.setHits(0);
@@ -112,7 +112,7 @@ public class ContentServiceImpl implements IContentService {
     @Override
     public ContentVo getContents(String id) {
         if (StringUtils.isNotBlank(id)) {
-            if (Tools.isNumber(id)) {
+            if (StringSimpleUtils.isNumber(id)) {
                 ContentVo contentVo = contentDao.selectByPrimaryKey(Integer.valueOf(id));
                 if (contentVo != null) {
                     contentVo.setHits(contentVo.getHits() + 1);
@@ -210,7 +210,7 @@ public class ContentServiceImpl implements IContentService {
         if (StringUtils.isBlank(contents.getSlug())) {
             contents.setSlug(null);
         }
-        int time = DateKit.getCurrentUnixTime();
+        int time = DateUtil.getCurrentUnixTime();
         contents.setModified(time);
         Integer cid = contents.getCid();
         contents.setContent(EmojiParser.parseToAliases(contents.getContent()));

@@ -5,7 +5,7 @@ import com.peanutplan.blog.exception.TipException;
 import com.peanutplan.blog.model.vo.UserVo;
 import com.peanutplan.blog.model.vo.UserVoExample;
 import com.peanutplan.blog.service.IUserService;
-import com.peanutplan.blog.utils.TaleUtils;
+import com.peanutplan.blog.utils.StringSimpleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements IUserService {
         Integer uid = null;
         if (StringUtils.isNotBlank(userVo.getUsername()) && StringUtils.isNotBlank(userVo.getEmail())) {
 //            用户密码加密
-            String encodePwd = TaleUtils.MD5encode(userVo.getUsername() + userVo.getPassword());
+            String encodePwd = StringSimpleUtils.MD5encode(userVo.getUsername() + userVo.getPassword());
             userVo.setPassword(encodePwd);
              userDao.insertSelective(userVo);
         }
@@ -57,7 +57,7 @@ public class UserServiceImpl implements IUserService {
         if (count < 1) {
             throw new TipException("不存在该用户");
         }
-        String pwd = TaleUtils.MD5encode(username+password);
+        String pwd = StringSimpleUtils.MD5encode(username+password);
         criteria.andPasswordEqualTo(pwd);
         List<UserVo> userVos = userDao.selectByExample(example);
         if (userVos.size()!=1) {

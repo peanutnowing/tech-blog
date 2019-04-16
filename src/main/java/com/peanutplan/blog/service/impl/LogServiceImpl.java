@@ -7,7 +7,7 @@ import com.peanutplan.blog.dao.LogVoMapper;
 import com.peanutplan.blog.model.vo.LogVo;
 import com.peanutplan.blog.model.vo.LogVoExample;
 import com.peanutplan.blog.service.ILogService;
-import com.peanutplan.blog.utils.DateKit;
+import com.peanutplan.blog.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class LogServiceImpl implements ILogService {
         logs.setData(data);
         logs.setIp(ip);
         logs.setAuthorId(authorId);
-        logs.setCreated(DateKit.getCurrentUnixTime());
+        logs.setCreated(DateUtil.getCurrentUnixTime());
         logDao.insert(logs);
     }
 

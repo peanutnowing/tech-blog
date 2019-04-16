@@ -10,8 +10,8 @@ import com.peanutplan.blog.model.vo.CommentVoExample;
 import com.peanutplan.blog.model.vo.ContentVo;
 import com.peanutplan.blog.service.ICommentService;
 import com.peanutplan.blog.service.IContentService;
-import com.peanutplan.blog.utils.DateKit;
-import com.peanutplan.blog.utils.TaleUtils;
+import com.peanutplan.blog.utils.DateUtil;
+import com.peanutplan.blog.utils.StringSimpleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,7 @@ public class CommentServiceImpl implements ICommentService {
         if (StringUtils.isBlank(comments.getAuthor())) {
             comments.setAuthor("热心网友");
         }
-        if (StringUtils.isNotBlank(comments.getMail()) && !TaleUtils.isEmail(comments.getMail())) {
+        if (StringUtils.isNotBlank(comments.getMail()) && !StringSimpleUtils.isEmail(comments.getMail())) {
             throw new TipException("请输入正确的邮箱格式");
         }
         if (StringUtils.isBlank(comments.getContent())) {
@@ -59,7 +59,7 @@ public class CommentServiceImpl implements ICommentService {
             throw new TipException("不存在的文章");
         }
         comments.setOwnerId(contents.getAuthorId());
-        comments.setCreated(DateKit.getCurrentUnixTime());
+        comments.setCreated(DateUtil.getCurrentUnixTime());
         commentDao.insertSelective(comments);
 
         ContentVo temp = new ContentVo();

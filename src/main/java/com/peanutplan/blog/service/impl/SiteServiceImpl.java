@@ -16,8 +16,8 @@ import com.peanutplan.blog.model.bo.BackResponseBo;
 import com.peanutplan.blog.model.bo.StatisticsBo;
 import com.peanutplan.blog.model.vo.*;
 import com.peanutplan.blog.service.ISiteService;
-import com.peanutplan.blog.utils.DateKit;
-import com.peanutplan.blog.utils.TaleUtils;
+import com.peanutplan.blog.utils.CommonUtils;
+import com.peanutplan.blog.utils.DateUtil;
 import com.peanutplan.blog.utils.ZipUtils;
 import com.peanutplan.blog.utils.backup.Backup;
 import org.apache.commons.lang3.StringUtils;
@@ -94,7 +94,7 @@ public class SiteServiceImpl implements ISiteService {
             String bkAttachDir = AttachController.CLASSPATH + "upload";
             String bkThemesDir = AttachController.CLASSPATH + "templates/themes";
 
-            String fname = DateKit.dateFormat(new Date(), fmt) + "_" + TaleUtils.getRandomNumber(5) + ".zip";
+            String fname = DateUtil.dateFormat(new Date(), fmt) + "_" + CommonUtils.getRandomNumber(5) + ".zip";
 
             String attachPath = bk_path + "/" + "attachs_" + fname;
             String themesPath = bk_path + "/" + "themes_" + fname;
@@ -114,10 +114,10 @@ public class SiteServiceImpl implements ISiteService {
                     file.mkdirs();
                 }
             }
-            String sqlFileName = "tale_" + DateKit.dateFormat(new Date(), fmt) + "_" + TaleUtils.getRandomNumber(5) + ".sql";
+            String sqlFileName = "tale_" + DateUtil.dateFormat(new Date(), fmt) + "_" + CommonUtils.getRandomNumber(5) + ".sql";
             String zipFile = sqlFileName.replace(".sql", ".zip");
 
-            Backup backup = new Backup(TaleUtils.getNewDataSource().getConnection());
+            Backup backup = new Backup(CommonUtils.getNewDataSource().getConnection());
             String sqlContent = backup.execute();
 
             File sqlFile = new File(bkAttachDir + sqlFileName);
@@ -187,9 +187,9 @@ public class SiteServiceImpl implements ISiteService {
                 ContentVoExample.Criteria criteria = example.createCriteria().andTypeEqualTo(Types.ARTICLE.getType()).andStatusEqualTo(Types.PUBLISH.getType());
                 example.setOrderByClause("created desc");
                 String date = archive.getDate();
-                Date sd = DateKit.dateFormat(date, "yyyy年MM月");
-                int start = DateKit.getUnixTimeByDate(sd);
-                int end = DateKit.getUnixTimeByDate(DateKit.dateAdd(DateKit.INTERVAL_MONTH, sd, 1)) - 1;
+                Date sd = DateUtil.dateFormat(date, "yyyy年MM月");
+                int start = DateUtil.getUnixTimeByDate(sd);
+                int end = DateUtil.getUnixTimeByDate(DateUtil.dateAdd(DateUtil.INTERVAL_MONTH, sd, 1)) - 1;
                 criteria.andCreatedGreaterThan(start);
                 criteria.andCreatedLessThan(end);
                 List<ContentVo> contentss = contentDao.selectByExample(example);

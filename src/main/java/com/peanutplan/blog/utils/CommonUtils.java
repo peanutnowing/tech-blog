@@ -11,6 +11,7 @@ import com.peanutplan.blog.model.vo.ContentVo;
 import com.peanutplan.blog.model.vo.UserVo;
 import com.peanutplan.blog.service.ISiteService;
 import com.vdurmont.emoji.EmojiParser;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -53,7 +54,7 @@ public final class CommonUtils {
         siteService = ss;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(StringUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(StringSimpleUtils.class);
 
     private static DataSource newDataSource;
 
@@ -128,11 +129,11 @@ public final class CommonUtils {
      * @return
      */
     public static String site_option(String key, String defalutValue) {
-        if (org.apache.commons.lang3.StringUtils.isBlank(key)) {
+        if (StringUtils.isBlank(key)) {
             return "";
         }
         String str = WebConst.initConfig.get(key);
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(str)) {
+        if (StringUtils.isNotBlank(str)) {
             return str;
         } else {
             return defalutValue;
@@ -180,10 +181,10 @@ public final class CommonUtils {
      */
     public static String gravatar(String email) {
         String avatarUrl = "https://secure.gravatar.com/avatar";
-        if (org.apache.commons.lang3.StringUtils.isBlank(email)) {
+        if (StringUtils.isBlank(email)) {
             return avatarUrl;
         }
-        String hash = StringUtils.MD5encode(email.trim().toLowerCase());
+        String hash = StringSimpleUtils.MD5encode(email.trim().toLowerCase());
         return avatarUrl + "/" + hash;
     }
 
@@ -217,7 +218,7 @@ public final class CommonUtils {
      * @return
      */
     public static String permalink(Integer cid, String slug) {
-        return site_url("/article/" + (org.apache.commons.lang3.StringUtils.isNotBlank(slug) ? slug : cid.toString()));
+        return site_url("/article/" + (StringUtils.isNotBlank(slug) ? slug : cid.toString()));
     }
 
     /**
@@ -238,7 +239,7 @@ public final class CommonUtils {
      * @return
      */
     public static String fmtdate(Integer unixTime, String patten) {
-        if (null != unixTime && org.apache.commons.lang3.StringUtils.isNotBlank(patten)) {
+        if (null != unixTime && StringUtils.isNotBlank(patten)) {
             return DateUtil.formatDateByUnixTime(unixTime, patten);
         }
         return "";
@@ -251,7 +252,7 @@ public final class CommonUtils {
      * @return
      */
     public static String show_categories(String categories) throws UnsupportedEncodingException {
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(categories)) {
+        if (StringUtils.isNotBlank(categories)) {
             String[] arr = categories.split(",");
             StringBuffer sbuf = new StringBuffer();
             for (String c : arr) {
@@ -269,7 +270,7 @@ public final class CommonUtils {
      * @return
      */
     public static String show_tags(String tags) throws UnsupportedEncodingException {
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(tags)) {
+        if (StringUtils.isNotBlank(tags)) {
             String[] arr = tags.split(",");
             StringBuffer sbuf = new StringBuffer();
             for (String c : arr) {
@@ -291,9 +292,9 @@ public final class CommonUtils {
         int pos = value.indexOf("<!--more-->");
         if (pos != -1) {
             String html = value.substring(0, pos);
-            return StringUtils.htmlToText(StringUtils.mdToHtml(html));
+            return StringSimpleUtils.htmlToText(StringSimpleUtils.mdToHtml(html));
         } else {
-            String text = StringUtils.htmlToText(StringUtils.mdToHtml(value));
+            String text = StringSimpleUtils.htmlToText(StringSimpleUtils.mdToHtml(value));
             if (text.length() > len) {
                 return text.substring(0, len);
             }
@@ -308,9 +309,9 @@ public final class CommonUtils {
      * @return
      */
     public static String article(String value) {
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(value)) {
+        if (StringUtils.isNotBlank(value)) {
             value = value.replace("<!--more-->", "\r\n");
-            return StringUtils.mdToHtml(value);
+            return StringSimpleUtils.mdToHtml(value);
         }
         return "";
     }
@@ -421,7 +422,7 @@ public final class CommonUtils {
      * @return
      */
     public static String show_thumb(String content) {
-        content = StringUtils.mdToHtml(content);
+        content = StringSimpleUtils.mdToHtml(content);
         if (content.contains("<img")) {
             String img = "";
             String regEx_img = "<img.*src\\s*=\\s*(.*?)[^>]*?>";
@@ -507,9 +508,9 @@ public final class CommonUtils {
      * @return
      */
     public static DataSource getNewDataSource() {
-        if (newDataSource == null) synchronized (StringUtils.class) {
+        if (newDataSource == null) synchronized (StringSimpleUtils.class) {
             if (newDataSource == null) {
-                Properties properties = StringUtils.getPropFromFile("application-jdbc.properties");
+                Properties properties = StringSimpleUtils.getPropFromFile("application-jdbc.properties");
                 if (properties.size() == 0) {
                     return newDataSource;
                 }
@@ -551,7 +552,7 @@ public final class CommonUtils {
             if (cookie != null && cookie.getValue() != null) {
                 try {
                     String uid = deAes(cookie.getValue(), WebConst.AES_SALT);
-                    return org.apache.commons.lang3.StringUtils.isNotBlank(uid) && StringUtils.isNumber(uid) ? Integer.valueOf(uid) : null;
+                    return StringUtils.isNotBlank(uid) && StringSimpleUtils.isNumber(uid) ? Integer.valueOf(uid) : null;
                 } catch (Exception e) {
                 }
             }
@@ -623,7 +624,7 @@ public final class CommonUtils {
      * @return
      */
     public static String getUplodFilePath() {
-        String path = StringUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String path = StringSimpleUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         path = path.substring(1, path.length());
         try {
             path = java.net.URLDecoder.decode(path, "utf-8");
@@ -678,7 +679,7 @@ public final class CommonUtils {
      * @return
      */
     public static boolean isPath(String slug) {
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(slug)) {
+        if (StringUtils.isNotBlank(slug)) {
             if (slug.contains("/") || slug.contains(" ") || slug.contains(".")) {
                 return false;
             }
@@ -693,7 +694,7 @@ public final class CommonUtils {
         if (!new File(AttachController.CLASSPATH + prefix).exists()) {
             new File(AttachController.CLASSPATH + prefix).mkdirs();
         }
-        name = org.apache.commons.lang3.StringUtils.trimToNull(name);
+        name = StringUtils.trimToNull(name);
         if (name == null) {
             return prefix + "/" + UUID.UU32() + "." + null;
         } else {
@@ -702,7 +703,7 @@ public final class CommonUtils {
             int index = name.lastIndexOf(".");
             String ext = null;
             if (index >= 0) {
-                ext = org.apache.commons.lang3.StringUtils.trimToNull(name.substring(index + 1));
+                ext = StringUtils.trimToNull(name.substring(index + 1));
             }
             return prefix + "/" + UUID.UU32() + "." + (ext == null ? null : (ext));
         }

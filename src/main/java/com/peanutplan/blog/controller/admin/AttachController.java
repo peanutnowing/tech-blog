@@ -1,6 +1,5 @@
 package com.peanutplan.blog.controller.admin;
 
-
 import com.github.pagehelper.PageInfo;
 import com.peanutplan.blog.constant.WebConst;
 import com.peanutplan.blog.controller.BaseController;
@@ -12,8 +11,7 @@ import com.peanutplan.blog.model.vo.AttachVo;
 import com.peanutplan.blog.model.vo.UserVo;
 import com.peanutplan.blog.service.IAttachService;
 import com.peanutplan.blog.service.ILogService;
-import com.peanutplan.blog.utils.Commons;
-import com.peanutplan.blog.utils.TaleUtils;
+import com.peanutplan.blog.utils.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -41,7 +39,7 @@ public class AttachController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AttachController.class);
 
-    public static final String CLASSPATH = TaleUtils.getUplodFilePath();
+    public static final String CLASSPATH = CommonUtils.getUplodFilePath();
 
     @Resource
     private IAttachService attachService;
@@ -62,7 +60,7 @@ public class AttachController extends BaseController {
                         @RequestParam(value = "limit", defaultValue = "12") int limit) {
         PageInfo<AttachVo> attachPaginator = attachService.getAttachs(page, limit);
         request.setAttribute("attachs", attachPaginator);
-        request.setAttribute(Types.ATTACH_URL.getType(), Commons.site_option(Types.ATTACH_URL.getType(), Commons.site_url()));
+        request.setAttribute(Types.ATTACH_URL.getType(), CommonUtils.site_option(Types.ATTACH_URL.getType(), CommonUtils.site_url()));
         request.setAttribute("max_file_size", WebConst.MAX_FILE_SIZE / 1024);
         return "admin/attach";
     }
@@ -84,8 +82,8 @@ public class AttachController extends BaseController {
             for (MultipartFile multipartFile : multipartFiles) {
                 String fname = multipartFile.getOriginalFilename();
                 if (multipartFile.getSize() <= WebConst.MAX_FILE_SIZE) {
-                    String fkey = TaleUtils.getFileKey(fname);
-                    String ftype = TaleUtils.isImage(multipartFile.getInputStream()) ? Types.IMAGE.getType() : Types.FILE.getType();
+                    String fkey = CommonUtils.getFileKey(fname);
+                    String ftype = CommonUtils.isImage(multipartFile.getInputStream()) ? Types.IMAGE.getType() : Types.FILE.getType();
                     File file = new File(CLASSPATH+fkey);
                     try {
                         FileCopyUtils.copy(multipartFile.getInputStream(),new FileOutputStream(file));

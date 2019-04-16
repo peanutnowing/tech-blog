@@ -1,5 +1,6 @@
 package com.peanutplan.blog.utils;
 import com.peanutplan.blog.exception.TipException;
+import org.apache.commons.lang3.StringUtils;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -20,9 +21,9 @@ import java.util.regex.Pattern;
  *
  * Created by 13 on 2017/2/21.
  */
-public class StringUtils {
+public class StringSimpleUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(StringUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(StringSimpleUtils.class);
 
     private static DataSource newDataSource;
     /**
@@ -41,7 +42,7 @@ public class StringUtils {
     /**
      * 获取文件所在目录
      */
-    private static String location = StringUtils.class.getClassLoader().getResource("").getPath();
+    private static String location = StringSimpleUtils.class.getClassLoader().getResource("").getPath();
 
     /**
      * 判断是否是邮箱
@@ -66,7 +67,7 @@ public class StringUtils {
         Properties properties = new Properties();
         try {
 //            默认是classPath路径
-            InputStream resourceAsStream = StringUtils.class.getClassLoader().getResourceAsStream(fileName);
+            InputStream resourceAsStream = StringSimpleUtils.class.getClassLoader().getResourceAsStream(fileName);
             if (resourceAsStream == null) {
                 throw new TipException("get resource from path fail");
             }
@@ -100,7 +101,7 @@ public class StringUtils {
      * @return 加密字符串
      */
     public static String MD5encode(String source) {
-        if (org.apache.commons.lang3.StringUtils.isBlank(source)) {
+        if (StringUtils.isBlank(source)) {
             return null;
         }
         MessageDigest messageDigest = null;
@@ -133,7 +134,7 @@ public class StringUtils {
      * @return
      */
     public static String htmlToText(String html) {
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(html)) {
+        if (StringUtils.isNotBlank(html)) {
             return html.replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
         }
         return "";
@@ -146,7 +147,7 @@ public class StringUtils {
      * @return
      */
     public static String mdToHtml(String markdown) {
-        if (org.apache.commons.lang3.StringUtils.isBlank(markdown)) {
+        if (StringUtils.isBlank(markdown)) {
             return "";
         }
         Node document = parser.parse(markdown);
